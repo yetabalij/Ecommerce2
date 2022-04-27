@@ -75,7 +75,7 @@ const productSchema = mongoose.Schema({
         required: true,
       },
       rating: {
-        tyep: Number,
+        type: Number,
         required: true,
       },
       comment: {

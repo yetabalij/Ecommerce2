@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 
 //route imports
 const userRoute = require("./routes/userRoutes");
+const productRoute = require("./routes/product");
 
 //middlewares
 const app = express();
@@ -32,7 +33,8 @@ mongoose
   });
 
 //middleware routes
-app.use("/user", userRoute);
+app.use("/api", userRoute);
+app.use("/api", productRoute);
 
 //starting the app
 const port = process.env.PORT || 5000;
