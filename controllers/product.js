@@ -9,7 +9,7 @@ exports.newProduct = async (req, res, next) => {
       product,
     });
   } catch (error) {
-    res.status(400).json({ message: "something went wrong" });
+    return res.status(400).json({ message: "something went wrong" });
   }
 };
 
@@ -22,6 +22,21 @@ exports.getProducts = async (req, res, next) => {
       products,
     });
   } catch (error) {
-    res.status(400).json({ message: "something went wrong" });
+    return res.status(400).json({ message: "something went wrong" });
+  }
+};
+
+//get single product detail
+exports.getSingleProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: " product not found" });
   }
 };
