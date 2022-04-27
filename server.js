@@ -5,6 +5,10 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 
+//route imports
+const userRoute = require("./routes/userRoutes");
+
+//middlewares
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -17,7 +21,6 @@ app.use(
 
 //connect to mongodb
 const URI = process.env.MONGODB_URI;
-//console.log(URI);
 mongoose
   .connect(URI, {
     useNewUrlParser: true,
@@ -28,10 +31,10 @@ mongoose
     console.log(err);
   });
 
-app.get("/", (req, res) => {
-  res.json({ msg: "welcom" });
-});
+//middleware routes
+app.use("/user", userRoute);
 
+//starting the app
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
