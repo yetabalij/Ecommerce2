@@ -21,7 +21,7 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  imagges: [
+  images: [
     {
       public_id: {
         type: String,
@@ -75,7 +75,7 @@ const productSchema = mongoose.Schema({
         required: true,
       },
       rating: {
-        tyep: Number,
+        type: Number,
         required: true,
       },
       comment: {
