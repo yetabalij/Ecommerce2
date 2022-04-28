@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 
 //route imports
 const userRoute = require("./routes/userRoutes");
-const productRoute = require("./routes/productRoute");
+const productRoute = require("./routes/product");
 
 //middlewares
 const app = express();
