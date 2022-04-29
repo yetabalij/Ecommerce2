@@ -1,14 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
 //import routes
 const userRoutes = require("./routes/user");
 
 //app
 const app = express();
 
-// //db
-
+//db
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
