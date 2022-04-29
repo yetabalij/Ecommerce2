@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-import { v4 as uuidv4 } from "uuid";
+const crypto = require("crypto");
+const { v4: uuidv4 } = require("uuid");
 
 const userSchema = mongoose.Schema(
   {
@@ -38,12 +38,11 @@ const userSchema = mongoose.Schema(
 );
 
 //virtual fields
-
 userSchema
   .virtual("password")
   .set(function (password) {
     this._password = password;
-    this.salt = uuidv4();
+    this.Salt = uuidv4();
     this.hased_password = this.encryptPassword(password);
   })
   .get(function () {
@@ -52,12 +51,13 @@ userSchema
 
 userSchema.methods = {
   encryptPassword: function (password) {
-    if (!password) {
-      return "";
-    }
+    if (!password) return "";
     try {
-      return bcrypt.hash(password, this.salt);
-    } catch (error) {
+      return crypto
+        .createHmac("sha1", this.Salt)
+        .update(password)
+        .digest("hex");
+    } catch (err) {
       return "";
     }
   },
