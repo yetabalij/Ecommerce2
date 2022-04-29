@@ -40,3 +40,20 @@ exports.getSingleProduct = async (req, res, next) => {
       .json({ success: false, message: " product not found" });
   }
 };
+//update single product detail
+exports.updateProduct = async (req, res, next) => {
+  const id = req.params.id;
+  const product = req.body;
+  try {
+    await Product.findByIdAndUpdate(id, product, { useFindAndModify: false });
+    res.status(200).json({
+      success: true,
+      message: "Record updated successfully",
+      product,
+    });
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: " product not found" });
+  }
+};
