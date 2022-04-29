@@ -57,3 +57,21 @@ exports.updateProduct = async (req, res, next) => {
       .json({ success: false, message: " product not found" });
   }
 };
+
+//Delete sigle product
+exports.deleteProduct = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      res.send({ message: "product not found" });
+    } else {
+      await Product.findByIdAndDelete(id);
+      res.status(200).json({ message: "Record deleted successfully." });
+    }
+  } catch (error) {
+    return res
+      .status(404)
+      .json({ success: false, message: " product not found" });
+  }
+};
