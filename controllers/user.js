@@ -54,7 +54,7 @@ exports.signin = async (req, res, next) => {
     res.cookie("t", token, { expire: new Date() + 9999 });
     //return response with user and token to fontend client
     const { _id, name, role } = user;
-    return res.json({ token, _id, name, role, email });
+    return res.json({ token, user: { _id, name, role, email } });
   } catch (error) {
     res.status(500).json({
       success: false,
