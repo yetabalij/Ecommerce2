@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
-const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
   {
@@ -37,30 +36,17 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-//virtual fields
-userSchema
-  .virtual("password")
-  .set(function (password) {
-    this._password = password;
-    this.Salt = uuidv4();
-    this.hased_password = this.encryptPassword(password);
-  })
-  .get(function () {
-    return this._password;
-  });
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("hased_password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.hased_password = await bcrypt.hash(this.hased_password, salt);
+  next();
+});
 
-userSchema.methods = {
-  encryptPassword: function (password) {
-    if (!password) return "";
-    try {
-      return crypto
-        .createHmac("sha1", this.Salt)
-        .update(password)
-        .digest("hex");
-    } catch (err) {
-      return "";
-    }
-  },
+userSchema.methods.matchPassword = async function (hased_password) {
+  return await bcrypt.compare(hased_password, this.hased_password);
 };
 
 module.exports = mongoose.model("User", userSchema);
