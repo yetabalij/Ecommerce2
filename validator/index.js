@@ -1,5 +1,4 @@
 const { body } = require("express-validator");
-const { isLinux } = require("nodemon/lib/utils");
 const User = require("../models/user");
 exports.signUpvalidator = [
   body("name")
@@ -18,11 +17,8 @@ exports.signUpvalidator = [
     .exists({ checkFalsy: true })
     .withMessage("password  is required.")
     .isString()
-    //.notEmpty()
     .isLength({ min: 8 })
     .not()
     .withMessage("password mustt be at least 8 chars")
-    //.notEmpty()
     .isNumeric(),
-  //.withMessage("password must has number.")
 ];
