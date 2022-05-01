@@ -1,8 +1,10 @@
 const User = require("./../models/user");
 const jwt = require("jsonwebtoken");
-const expressjwt = require("express-jwt");
+//const expressJwt = require("express-jwt");
+const { expressjwt: expressJwt } = require("express-jwt");
 // const { errorHandler } = require("../helpers/dbErrorHandler");
 // const { validationResult } = require("express-validator");
+require("dotenv").config();
 
 exports.signUp = async (req, res, next) => {
   const { name, email, hased_password } = req.body;
@@ -67,3 +69,10 @@ exports.signout = (req, res) => {
   res.clearCookie("t");
   res.json({ message: "signout success" });
 };
+
+//console.log(JWT_SECREAT);
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECREAT,
+  algorithms: ["HS256"], // added later
+  userProperty: "auth",
+});
