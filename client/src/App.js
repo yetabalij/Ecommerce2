@@ -1,8 +1,18 @@
+import Home from "./pages/Home";
+import styled from "styled-components";
+import tw from "twin.macro";
+
+const AppContainer = styled.div`
+  ${tw`
+    bg-red-200
+  `}
+`;
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <AppContainer>
+      <Home />
+    </AppContainer>
   );
 }
 
