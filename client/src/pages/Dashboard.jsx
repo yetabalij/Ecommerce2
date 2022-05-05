@@ -1,7 +1,10 @@
 import React from "react";
+//import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  //let navigate = useNavigate();
+
+  return <div>Hello Admin</div>;
 };
 
 export default Dashboard;

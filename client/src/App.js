@@ -1,18 +1,26 @@
-import Home from "./pages/Home";
-import styled from "styled-components";
-import tw from "twin.macro";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const AppContainer = styled.div`
-  ${tw`
-    bg-red-200
-  `}
-`;
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Error from "./pages/Error";
+// import styled from "styled-components";
+// import tw from "twin.macro";
+
+// const AppContainer = styled.div`
+//   ${tw`
+//     bg-red-200
+//   `}
+// `;
 
 function App() {
   return (
-    <AppContainer>
-      <Home />
-    </AppContainer>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/notfound" element={<Error />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
