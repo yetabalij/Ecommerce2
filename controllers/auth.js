@@ -2,19 +2,20 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 //const expressJwt = require("express-jwt");
 const { expressjwt: expressJwt } = require("express-jwt");
+const user = require("../models/user");
 // const { errorHandler } = require("../helpers/dbErrorHandler");
 // const { validationResult } = require("express-validator");
 require("dotenv").config();
 
 exports.signUp = async (req, res, next) => {
   const { name, email, hased_password } = req.body;
-  console.log(hased_password);
   try {
     const user = await User.create({
       name,
       email,
       hased_password,
     });
+    user.hased_password = undefined;
     res.status(201).json({
       success: true,
       user: user,
