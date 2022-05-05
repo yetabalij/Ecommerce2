@@ -8,10 +8,11 @@ const user = require("../models/user");
 require("dotenv").config();
 
 exports.signUp = async (req, res, next) => {
-  const { name, email, hased_password } = req.body;
+  const { firstName, lastName, email, hased_password } = req.body;
   try {
     const user = await User.create({
-      name,
+      firstName,
+      lastName,
       email,
       hased_password,
     });
