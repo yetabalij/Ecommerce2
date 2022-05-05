@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpContainer = styled.div`
   ${tw`
@@ -11,7 +13,30 @@ const SignUpContainer = styled.div`
     `}
 `;
 
+//initial state
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+};
+
 const Signup = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [formValue, setFormValue] = useState(initialState);
+  const { firstName, lastName, email, password } = formValue;
+
+  const onInputChange = (e) => {
+    let { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <SignUpContainer>
       <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
@@ -21,7 +46,7 @@ const Signup = () => {
             please fill in your information to continue
           </span>
         </h1>
-        <form class="mt-6">
+        <form onSubmit={handleSubmit} class="mt-6">
           <div class="flex justify-between gap-3">
             <span class="w-1/2">
               <label
@@ -31,28 +56,28 @@ const Signup = () => {
                 Firstname
               </label>
               <input
-                id="firstname"
                 type="text"
-                name="firstname"
-                placeholder="John"
-                autocomplete="given-name"
+                name="firstName"
+                value={firstName}
+                onChange={onInputChange}
+                placeholder="First Name"
                 class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                 required
               />
             </span>
             <span class="w-1/2">
               <label
-                for="lastname"
+                for="lastName"
                 class="block text-xs font-semibold text-gray-600 uppercase"
               >
                 Lastname
               </label>
               <input
-                id="lastname"
                 type="text"
-                name="lastname"
-                placeholder="Doe"
-                autocomplete="family-name"
+                name="lastName"
+                value={lastName}
+                onChange={onInputChange}
+                placeholder="Last Name"
                 class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                 required
               />
@@ -65,11 +90,11 @@ const Signup = () => {
             E-mail
           </label>
           <input
-            id="email"
             type="email"
             name="email"
-            placeholder="john.doe@company.com"
-            autocomplete="email"
+            value={email}
+            onChange={onInputChange}
+            placeholder="example@domain.com"
             class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
             required
           />
@@ -80,11 +105,11 @@ const Signup = () => {
             Password
           </label>
           <input
-            id="password"
             type="password"
             name="password"
+            value={password}
+            onChange={onInputChange}
             placeholder="********"
-            autocomplete="new-password"
             class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
             required
           />
