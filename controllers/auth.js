@@ -52,6 +52,7 @@ exports.signin = async (req, res, next) => {
         error: "invalid credentials",
       });
     }
+
     //generate a signed token with user id and secreat
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECREAT);
     //persist the token as 't' in cookie with expirty date
